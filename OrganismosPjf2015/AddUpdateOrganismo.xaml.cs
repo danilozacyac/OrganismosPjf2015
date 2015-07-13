@@ -171,12 +171,12 @@ namespace OrganismosPjf2015
 
         private void RbtnAceptar_Click(object sender, RoutedEventArgs e)
         {
-            if (Convert.ToInt32(RcbCircuito.SelectedValue) < 1 || Convert.ToInt32(RcbOrdinal.SelectedValue) < 1)
-            {
-                MessageBox.Show("Debes seleccionar el circuito al que pertenece el tribunal, así como su respectivo ordinal", "ATENCIÓN",
-                                    MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
+            //if (Convert.ToInt32(RcbCircuito.SelectedValue) < 1 || Convert.ToInt32(RcbOrdinal.SelectedValue) < 1)
+            //{
+            //    MessageBox.Show("Debes seleccionar el circuito al que pertenece el tribunal, así como su respectivo ordinal", "ATENCIÓN",
+            //                        MessageBoxButton.OK, MessageBoxImage.Information);
+            //    return;
+            //}
 
             organismo.TipoOrganismo = Convert.ToInt32(this.RcbOrganismo.SelectedValue);
             organismo.Circuito = Convert.ToInt32(this.RcbCircuito.SelectedValue);
