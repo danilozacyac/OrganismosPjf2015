@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="OrganismosPjf2015.MyUserControls.FuncionariosSelect"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             d:DesignHeight="300"
+             d:DesignWidth="751"
+             Loaded="UserControl_Loaded"
+             mc:Ignorable="d">
+    <Grid>
+        <telerik:RadGridView Name="GridFuncionarios"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch"
+                             AutoGenerateColumns="False"
+                             CanUserDeleteRows="False"
+                             CanUserInsertRows="False"
+                             ItemsSource="{Binding}"
+                             ShowGroupPanel="False">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewCheckBoxColumn Width="30"
+                                                AutoSelectOnEdit="True"
+                                                DataMemberBinding="{Binding IsSelected,
+                                                                            Mode=TwoWay}"
+                                                EditTriggers="CellClick"
+                                                IsVisible="True" />
+
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding IdFuncionario}"
+                                            Header=""
+                                            IsReadOnly="True"
+                                            IsVisible="False" />
+                <telerik:GridViewDataColumn Width="90"
+                                            DataMemberBinding="{Binding Puesto}"
+                                            Header="Nombramiento"
+                                            IsReadOnly="True"
+                                            IsVisible="True" />
+                <telerik:GridViewDataColumn Width="*"
+                                            DataMemberBinding="{Binding Apellidos}"
+                                            Header="Apellidos"
+                                            IsFilterable="True"
+                                            IsReadOnly="True" />
+                <telerik:GridViewDataColumn Width="*"
+                                            DataMemberBinding="{Binding Nombre}"
+                                            Header="Nombre"
+                                            IsFilterable="False"
+                                            IsReadOnly="True" />
+                <telerik:GridViewDataColumn Width="0"
+                                            DataMemberBinding="{Binding Activo}"
+                                            Header="Activo"
+                                            IsReadOnly="True"
+                                            IsVisible="False" />
+                <telerik:GridViewDataColumn Width="*"
+                                            DataMemberBinding="{Binding Texto}"
+                                            Header="Texto"
+                                            IsReadOnly="True"
+                                            IsVisible="False" />
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </Grid>
+</UserControl>

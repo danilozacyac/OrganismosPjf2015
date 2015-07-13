@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="OrganismosPjf2015.MyUserControls.FuncionariosControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converter="clr-namespace:OrganismosPjf2015.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:search="clr-namespace:UIControls;assembly=UIControls"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             Name="UserFuncionarios"
+             Loaded="UserFuncionarios_Loaded"
+             d:DesignHeight="300"
+             d:DesignWidth="751"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+
+        <converter:NumIntegrantesStyle x:Key="integrantes">
+            <converter:NumIntegrantesStyle.SinIntegrantes>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="Background" Value="Red" />
+                </Style>
+            </converter:NumIntegrantesStyle.SinIntegrantes>
+            <converter:NumIntegrantesStyle.AlgunIntegrante>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="Background" Value="White" />
+                </Style>
+            </converter:NumIntegrantesStyle.AlgunIntegrante>
+        </converter:NumIntegrantesStyle>
+        <converter:ImageConverter x:Key="estadoFuncionarios" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <search:SearchTextBox Grid.Row="0"
+                              Grid.ColumnSpan="2"
+                              Width="200"
+                              Height="21"
+                              Margin="10,10,0,0"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"
+                              LabelText="Buscar"
+                              Search="SearchTextBox_Search" />
+
+        <telerik:RadBusyIndicator x:Name="BusyIndicator"
+                                  Grid.Row="1"
+                                  IsIndeterminate="True"
+                                  telerik:StyleManager.Theme="Windows7">
+            <telerik:RadGridView Name="GridFuncionarios"
+                                 Grid.Row="1"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 AutoGenerateColumns="False"
+                                 CanUserDeleteRows="False"
+                                 CanUserInsertRows="False"
+                                 IsReadOnly="True"
+                                 ItemsSource="{Binding}"
+                                 RowStyleSelector="{StaticResource integrantes}"
+                                 SelectionChanged="GridFuncionarios_SelectionChanged"
+                                 ShowGroupPanel="False">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewCheckBoxColumn Width="30"
+                                                    DataMemberBinding="{Binding IsSelected,
+                                                                                Mode=TwoWay}"
+                                                    IsVisible="False" />
+
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding IdFuncionario}"
+                                                Header=""
+                                                IsVisible="False" />
+                    <telerik:GridViewDataColumn Width="90"
+                                                DataMemberBinding="{Binding Puesto}"
+                                                Header="Nombramiento"
+                                                IsVisible="True" />
+                    <telerik:GridViewDataColumn Width="*"
+                                                DataMemberBinding="{Binding Apellidos}"
+                                                Header="Apellidos"
+                                                IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="*"
+                                                DataMemberBinding="{Binding Nombre}"
+                                                Header="Nombre"
+                                                IsFilterable="False" />
+
+                    <telerik:GridViewDataColumn Width="*"
+                                                DataMemberBinding="{Binding Texto}"
+                                                Header="Texto"
+                                                IsFilterable="False" />
+                    <telerik:GridViewImageColumn Width="100"
+                                                 DataMemberBinding="{Binding Activo,
+                                                                             Converter={StaticResource estadoFuncionarios}}"
+                                                 Header="Estado"
+                                                 ImageHeight="24"
+                                                 ImageWidth="24"
+                                                 IsFilterable="False"
+                                                 IsVisible="True" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</UserControl>
+

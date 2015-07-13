@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="OrganismosPjf2015.MyUserControls.Colegiados"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converter="clr-namespace:OrganismosPjf2015.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             Name="UserColegiados"
+             Loaded="UserColegiados_Loaded"
+             d:DesignHeight="300"
+             d:DesignWidth="751"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:MateriaConverter x:Key="materiaConverter" />
+        <converter:CircuitoConverter x:Key="circuitoConverter" />
+        <converter:OrdinalesConverter x:Key="ordinalConverter" />
+        <converter:CiudadesConverter x:Key="ciudadConverter" />
+
+        <converter:NumIntegrantesStyle x:Key="integrantes">
+            <converter:NumIntegrantesStyle.SinIntegrantes>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="Background" Value="OrangeRed" />
+                </Style>
+            </converter:NumIntegrantesStyle.SinIntegrantes>
+            <converter:NumIntegrantesStyle.AlgunIntegrante>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="Background" Value="White" />
+                </Style>
+            </converter:NumIntegrantesStyle.AlgunIntegrante>
+            <converter:NumIntegrantesStyle.MasIntegrantes>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="Background" Value="Yellow" />
+                </Style>
+            </converter:NumIntegrantesStyle.MasIntegrantes>
+        </converter:NumIntegrantesStyle>
+
+    </UserControl.Resources>
+    <Grid>
+        <telerik:RadBusyIndicator x:Name="BusyIndicator"
+                                  IsIndeterminate="True"
+                                  telerik:StyleManager.Theme="Windows7">
+            <telerik:RadGridView Name="GridColegiados"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 AutoGenerateColumns="False"
+                                 CanUserDeleteRows="False"
+                                 CanUserInsertRows="False"
+                                 IsReadOnly="True"
+                                 ItemsSource="{Binding}"
+                                 RowStyleSelector="{StaticResource integrantes}"
+                                 SelectionChanged="GridColegiados_SelectionChanged"
+                                 ShowGroupPanel="False">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding IdOrg}"
+                                                Header="IdOrganismo"
+                                                IsVisible="False" />
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding TipoOrganismo}"
+                                                Header="Tipo"
+                                                IsVisible="False" />
+                    <telerik:GridViewDataColumn Width="Auto"
+                                                DataMemberBinding="{Binding Organismo}"
+                                                Header="Organismo"
+                                                IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="Auto"
+                                                DataMemberBinding="{Binding Materia,
+                                                                            Converter={StaticResource materiaConverter}}"
+                                                Header="Materia"
+                                                IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="100"
+                                                DataMemberBinding="{Binding Circuito,
+                                                                            Converter={StaticResource circuitoConverter}}"
+                                                Header="Circuito" />
+                    <telerik:GridViewDataColumn Width="100"
+                                                DataMemberBinding="{Binding Ordinal,
+                                                                            Converter={StaticResource ordinalConverter}}"
+                                                Header="Ordinal" />
+                    <telerik:GridViewDataColumn Width="200"
+                                                DataMemberBinding="{Binding Direccion}"
+                                                Header="Dirección"
+                                                IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="150"
+                                                DataMemberBinding="{Binding Telefonos}"
+                                                Header="Telefonos"
+                                                IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="80"
+                                                DataMemberBinding="{Binding Ciudad,
+                                                                            Converter={StaticResource ciudadConverter}}"
+                                                Header="Ciudad" />
+                    <telerik:GridViewDataColumn Width="50"
+                                                DataMemberBinding="{Binding ListaFuncionarios.Count}"
+                                                Header="Integrantes"
+                                                IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="50"
+                                                DataMemberBinding="{Binding OrdenImpresion}"
+                                                Header="Orden Impresión"
+                                                IsFilterable="False" />
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding ListaFuncionarios}"
+                                                Header=""
+                                                IsVisible="False" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</UserControl>
