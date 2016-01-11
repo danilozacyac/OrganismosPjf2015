@@ -63,3 +63,5 @@ C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\Organism
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\HistorialFuncionarios.g.cs
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\UIControls.dll
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\UIControls.pdb
+C:\windows\system32\obj\x86\Debug\OrganismosPjf2015.exe
+C:\windows\system32\obj\x86\Debug\OrganismosPjf2015.pdb

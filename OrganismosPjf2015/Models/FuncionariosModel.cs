@@ -165,7 +165,7 @@ namespace OrganismosPjf2015.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT F.*" +
+            String sqlCadena = "SELECT F.*,R.*" +
                                "FROM (Organismos O INNER JOIN Rel_Org_Func R ON O.IdOrg = R.IdOrg) " +
                                "INNER JOIN Funcionarios F ON R.IdFunc = F.IdFunc WHERE O.IdOrg = @IdOrganismo " +
                                " ORDER BY Apellidos";
@@ -183,12 +183,13 @@ namespace OrganismosPjf2015.Models
                     while (reader.Read())
                     {
                         Funcionarios funcionario = new Funcionarios();
-                        funcionario.IdFuncionario = Convert.ToInt32(reader["idFunc"]);
+                        funcionario.IdFuncionario = Convert.ToInt32(reader["F.idFunc"]);
                         funcionario.Puesto = reader["Puesto"].ToString();
                         funcionario.Apellidos = reader["Apellidos"].ToString();
                         funcionario.Nombre = reader["Nombre"].ToString();
                         funcionario.Texto = reader["Texto"].ToString();
                         funcionario.Activo = reader["Activo"] as int? ?? 0;
+                        funcionario.EnFunciones = Convert.ToInt32(reader["Funcion"]);
                         funcionarios.Add(funcionario);
                     }
                 }

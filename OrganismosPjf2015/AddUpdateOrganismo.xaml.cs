@@ -7,7 +7,6 @@ using OrganismosPjf2015.Dao;
 using OrganismosPjf2015.Models;
 using OrganismosPjf2015.MyUserControls;
 using OrganismosPjf2015.Singletons;
-using Telerik.Windows.Controls.GridView;
 
 namespace OrganismosPjf2015
 {
