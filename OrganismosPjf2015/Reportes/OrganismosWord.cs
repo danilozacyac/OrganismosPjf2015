@@ -61,7 +61,7 @@ namespace OrganismosPjf2015.Reportes
                 foreach (Funcionarios funcionario in organismo.ListaFuncionarios)
                 {
 
-                    par.Range.Text = funcionario.Puesto + " " + funcionario.Nombre + " " + funcionario.Apellidos;
+                    par.Range.Text = funcionario.Texto + " " + funcionario.Puesto + " " + funcionario.Nombre + " " + funcionario.Apellidos;
 
                     if (funcionario.EnFunciones > 100)
                     {
@@ -71,11 +71,11 @@ namespace OrganismosPjf2015.Reportes
                                               select n.Descripcion).ToList()[0];
                     }
 
-                    if (!String.IsNullOrEmpty(funcionario.Texto.Trim()))
-                    {
-                        par.Range.InsertParagraphAfter();
-                        par.Range.Text = "(" + this.GetCompleteDate(funcionario.Texto) + ")";
-                    }
+                    //if (!String.IsNullOrEmpty(funcionario.Texto.Trim()))
+                    //{
+                    //    par.Range.InsertParagraphAfter();
+                    //    par.Range.Text = "(" + this.GetCompleteDate(funcionario.Texto) + ")";
+                    //}
                     par.Range.InsertParagraphAfter();
                     par.Range.ParagraphFormat.SpaceAfter = 0;
                 }

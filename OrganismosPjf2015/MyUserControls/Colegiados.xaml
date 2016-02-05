@@ -61,6 +61,10 @@
                                                 DataMemberBinding="{Binding Organismo}"
                                                 Header="Organismo"
                                                 IsFilterable="False" />
+                    <telerik:GridViewDataColumn Width="50"
+                                                DataMemberBinding="{Binding OrdenImpresion}"
+                                                Header="Orden Impresión"
+                                                IsFilterable="False" />
                     <telerik:GridViewDataColumn Width="Auto"
                                                 DataMemberBinding="{Binding Materia,
                                                                             Converter={StaticResource materiaConverter}}"
@@ -90,10 +94,7 @@
                                                 DataMemberBinding="{Binding ListaFuncionarios.Count}"
                                                 Header="Integrantes"
                                                 IsFilterable="False" />
-                    <telerik:GridViewDataColumn Width="50"
-                                                DataMemberBinding="{Binding OrdenImpresion}"
-                                                Header="Orden Impresión"
-                                                IsFilterable="False" />
+
                     <telerik:GridViewDataColumn DataMemberBinding="{Binding ListaFuncionarios}"
                                                 Header=""
                                                 IsVisible="False" />
