@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
-using System.Windows.Forms;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
 
@@ -40,19 +39,17 @@ namespace OrganismosPjf2015.Models
                 {
                     while (reader.Read())
                     {
-                        Funcionarios funcionario = new Funcionarios();
-                        funcionario.IdFuncionario = Convert.ToInt32(reader["idFunc"]);
-                        funcionario.IdOrganismo = reader["IdOrg"] as int? ?? 0;
-                        funcionario.Puesto = reader["Puesto"].ToString();
-                        funcionario.Apellidos = reader["Apellidos"].ToString();
-                        funcionario.Nombre = reader["Nombre"].ToString();
-                        funcionario.Texto = reader["Texto"].ToString();
-                        funcionario.Activo = reader["Activo"] as int? ?? 0;
-
-                        if (reader["Funcion"] != System.DBNull.Value)
-                            funcionario.EnFunciones = Convert.ToInt16(reader["Funcion"]);
-                        else
-                            funcionario.EnFunciones = 0;
+                        Funcionarios funcionario = new Funcionarios()
+                        {
+                            IdFuncionario = Convert.ToInt32(reader["idFunc"]),
+                            IdOrganismo = reader["IdOrg"] as int? ?? 0,
+                            Puesto = reader["Puesto"].ToString(),
+                            Apellidos = reader["Apellidos"].ToString(),
+                            Nombre = reader["Nombre"].ToString(),
+                            Texto = reader["Texto"].ToString(),
+                            Activo = reader["Activo"] as int? ?? 0,
+                            EnFunciones = (reader["Funcion"] != DBNull.Value) ? Convert.ToInt16(reader["Funcion"]) : 0
+                        };
 
                         funcionarios.Add(funcionario);
                     }
@@ -61,16 +58,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             finally
             {
@@ -182,14 +175,16 @@ namespace OrganismosPjf2015.Models
                 {
                     while (reader.Read())
                     {
-                        Funcionarios funcionario = new Funcionarios();
-                        funcionario.IdFuncionario = Convert.ToInt32(reader["F.idFunc"]);
-                        funcionario.Puesto = reader["Puesto"].ToString();
-                        funcionario.Apellidos = reader["Apellidos"].ToString();
-                        funcionario.Nombre = reader["Nombre"].ToString();
-                        funcionario.Texto = reader["Texto"].ToString();
-                        funcionario.Activo = reader["Activo"] as int? ?? 0;
-                        funcionario.EnFunciones = Convert.ToInt32(reader["Funcion"]);
+                        Funcionarios funcionario = new Funcionarios()
+                        {
+                            IdFuncionario = Convert.ToInt32(reader["F.idFunc"]),
+                            Puesto = reader["Puesto"].ToString(),
+                            Apellidos = reader["Apellidos"].ToString(),
+                            Nombre = reader["Nombre"].ToString(),
+                            Texto = reader["Texto"].ToString(),
+                            Activo = reader["Activo"] as int? ?? 0,
+                            EnFunciones = Convert.ToInt32(reader["Funcion"])
+                        };
                         funcionarios.Add(funcionario);
                     }
                 }
@@ -197,16 +192,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             finally
             {
@@ -247,13 +238,15 @@ namespace OrganismosPjf2015.Models
                 {
                     while (reader.Read())
                     {
-                        Funcionarios funcionario = new Funcionarios();
-                        funcionario.IdFuncionario = Convert.ToInt32(reader["idFunc"]);
-                        funcionario.Puesto = reader["Puesto"].ToString();
-                        funcionario.Apellidos = reader["Apellidos"].ToString();
-                        funcionario.Nombre = reader["Nombre"].ToString();
-                        funcionario.Texto = reader["Texto"].ToString();
-                        funcionario.Activo = reader["Activo"] as int? ?? 0;
+                        Funcionarios funcionario = new Funcionarios()
+                        {
+                            IdFuncionario = Convert.ToInt32(reader["idFunc"]),
+                            Puesto = reader["Puesto"].ToString(),
+                            Apellidos = reader["Apellidos"].ToString(),
+                            Nombre = reader["Nombre"].ToString(),
+                            Texto = reader["Texto"].ToString(),
+                            Activo = reader["Activo"] as int? ?? 0
+                        };
                         funcionarios.Add(funcionario);
                     }
                 }
@@ -261,16 +254,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             finally
             {
@@ -312,10 +301,12 @@ namespace OrganismosPjf2015.Models
                 {
                     while (reader.Read())
                     {
-                        Integraciones integracion = new Integraciones();
-                        integracion.IdIntegracion = reader["IdIntegracion"] as int? ?? -1;
-                        integracion.FechaIntegracion = DateTimeUtilities.GetDateFromReader(reader, "FechaIntegracion");
-                        integracion.Organismo = reader["Organismo"].ToString();
+                        Integraciones integracion = new Integraciones()
+                        {
+                            IdIntegracion = reader["IdIntegracion"] as int? ?? -1,
+                            FechaIntegracion = DateTimeUtilities.GetDateFromReader(reader, "FechaIntegracion"),
+                            Organismo = reader["Organismo"].ToString()
+                        };
 
                         listaIntegracion.Add(integracion);
                     }
@@ -324,16 +315,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             finally
             {
@@ -369,13 +356,15 @@ namespace OrganismosPjf2015.Models
                 {
                     while (reader.Read())
                     {
-                        Funcionarios funcionario = new Funcionarios();
-                        funcionario.IdFuncionario = Convert.ToInt32(reader["idFunc"]);
-                        funcionario.Puesto = reader["Puesto"].ToString();
-                        funcionario.Apellidos = reader["Apellidos"].ToString();
-                        funcionario.Nombre = reader["Nombre"].ToString();
-                        funcionario.Texto = reader["FechaCambio"].ToString();
-                        funcionario.Activo = reader["Activo"] as int? ?? 0;
+                        Funcionarios funcionario = new Funcionarios()
+                        {
+                            IdFuncionario = Convert.ToInt32(reader["idFunc"]),
+                            Puesto = reader["Puesto"].ToString(),
+                            Apellidos = reader["Apellidos"].ToString(),
+                            Nombre = reader["Nombre"].ToString(),
+                            Texto = reader["FechaCambio"].ToString(),
+                            Activo = reader["Activo"] as int? ?? 0
+                        };
                         funcionarios.Add(funcionario);
                     }
                 }
@@ -383,16 +372,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             finally
             {
@@ -431,16 +416,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             finally
             {
@@ -464,9 +445,9 @@ namespace OrganismosPjf2015.Models
             if (idFuncionario != 0)
             {
                 funcionario.IdFuncionario = idFuncionario;
-                string sqlCadena = "SELECT * FROM Funcionarios WHERE idFunc = 0";
+                
                 dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+                dataAdapter.SelectCommand = new OleDbCommand("SELECT * FROM Funcionarios WHERE idFunc = 0", oleConne);
 
                 dataAdapter.Fill(dataSet, "Funcionario");
 
@@ -509,13 +490,12 @@ namespace OrganismosPjf2015.Models
         public void UpdateFuncionario(Funcionarios funcionario)
         {
             OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
             string sqlCadena = "SELECT * FROM Funcionarios WHERE idFunc = " + funcionario.IdFuncionario;
-            dataAdapter = new OleDbDataAdapter();
             dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
 
             dataAdapter.Fill(dataSet, "Funcionario");
@@ -561,13 +541,12 @@ namespace OrganismosPjf2015.Models
         private void UpdateFuncion(Funcionarios funcionario)
         {
             OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
             string sqlCadena = "SELECT * FROM Rel_Org_Func WHERE idFunc = " + funcionario.IdFuncionario;
-            dataAdapter = new OleDbDataAdapter();
             dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
 
             dataAdapter.Fill(dataSet, "Rel_Org_Func");
@@ -599,9 +578,7 @@ namespace OrganismosPjf2015.Models
         public void DeleteFuncionario(Funcionarios funcionario)
         {
             OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd;
-
-            cmd = oleConne.CreateCommand();
+            OleDbCommand cmd = oleConne.CreateCommand();
             cmd.Connection = oleConne;
 
             try
@@ -616,16 +593,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             finally
             {
@@ -637,13 +610,12 @@ namespace OrganismosPjf2015.Models
         public void DeleteTextoInicioNombramiento(Funcionarios funcionario)
         {
             OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
             string sqlCadena = "SELECT * FROM Funcionarios WHERE idFunc = " + funcionario.IdFuncionario;
-            dataAdapter = new OleDbDataAdapter();
             dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
 
             dataAdapter.Fill(dataSet, "Funcionario");
@@ -669,34 +641,29 @@ namespace OrganismosPjf2015.Models
         public void DeleteRelacionFuncionario(Funcionarios funcionario)
         {
             OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd;
-
-            cmd = oleConne.CreateCommand();
+            OleDbCommand cmd = oleConne.CreateCommand();
             cmd.Connection = oleConne;
 
-            String sqlCadena = "DELETE FROM Rel_Org_Func WHERE idOrg = " + funcionario.IdOrganismo +
-                               " AND idFunc = " + funcionario.IdFuncionario;
+            String sqlCadena = "DELETE FROM Rel_Org_Func WHERE idOrg = @IdOrg AND idFunc = @IdFunc";
 
             try
             {
                 oleConne.Open();
 
                 cmd.CommandText = sqlCadena;
+                cmd.Parameters.AddWithValue("@IdOrg", funcionario.IdOrganismo);
+                cmd.Parameters.AddWithValue("@IdFunc", funcionario.IdFuncionario);
                 cmd.ExecuteNonQuery();
             }
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             finally
             {
@@ -817,16 +784,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
             }
             finally
             {

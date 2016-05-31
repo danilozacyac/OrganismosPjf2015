@@ -1,12 +1,10 @@
-﻿using System;
+﻿using OrganismosPjf2015.Dao;
+using OrganismosPjf2015.Singletons;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using OrganismosPjf2015.Dao;
-using OrganismosPjf2015.Singletons;
-using Telerik.Windows.Controls;
 
 namespace OrganismosPjf2015.MyUserControls
 {

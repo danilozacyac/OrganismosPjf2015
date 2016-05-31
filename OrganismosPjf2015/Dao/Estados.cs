@@ -57,23 +57,23 @@ namespace OrganismosPjf2015.Dao
             OleDbCommand cmd;
             OleDbDataReader reader;
 
-            String sqlCadena = "SELECT * FROM Estados";
-
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new OleDbCommand("SELECT * FROM Estados", oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        Estados ciudad = new Estados();
-                        ciudad.IdEstado = Convert.ToInt32(reader["idEstado"]);
-                        ciudad.EstadoStr = reader["Estado"].ToString();
-                        ciudad.Abrev = reader["Abrev"].ToString();
+                        Estados ciudad = new Estados()
+                        {
+                            IdEstado = Convert.ToInt32(reader["idEstado"]),
+                            EstadoStr = reader["Estado"].ToString(),
+                            Abrev = reader["Abrev"].ToString()
+                        };
 
                         estados.Add(ciudad);
                     }
@@ -82,16 +82,12 @@ namespace OrganismosPjf2015.Dao
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, Estados", "OrganismosPjf2015");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, Estados", "OrganismosPjf2015");
             }
             finally
             {

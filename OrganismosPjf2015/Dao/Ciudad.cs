@@ -1,9 +1,8 @@
-﻿using System;
+﻿using ScjnUtilities;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.OleDb;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace OrganismosPjf2015.Dao
 {
@@ -57,13 +56,11 @@ namespace OrganismosPjf2015.Dao
             OleDbCommand cmd;
             OleDbDataReader reader;
 
-            String sqlCadena = "SELECT * FROM Ciudades";
-
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new OleDbCommand("SELECT * FROM Ciudades", oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -79,13 +76,15 @@ namespace OrganismosPjf2015.Dao
                     }
                 }
             }
-            catch (OleDbException sql)
+            catch (OleDbException ex)
             {
-                MessageBox.Show("Error ({0}) : {1}" + sql.Source + sql.Message, "Error Interno");
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, Ciudad", "OrganismosPjf2015");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, "Error Interno");
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, Ciudad", "OrganismosPjf2015");
             }
             finally
             {

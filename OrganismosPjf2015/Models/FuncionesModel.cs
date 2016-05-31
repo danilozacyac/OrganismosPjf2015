@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Linq;
-using System.Windows.Forms;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
 
@@ -26,13 +24,13 @@ namespace OrganismosPjf2015.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT * FROM Funciones WHERE TipoFuncion = @TipoFuncion OR TipoFuncion = 0 ORDER BY IdFuncion";
+            const String SqlQuery = "SELECT * FROM Funciones WHERE TipoFuncion = @TipoFuncion OR TipoFuncion = 0 ORDER BY IdFuncion";
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new OleDbCommand(SqlQuery, oleConne);
                 cmd.Parameters.AddWithValue("@TipoFuncion", tipoFuncion);
                 reader = cmd.ExecuteReader();
 
@@ -40,9 +38,11 @@ namespace OrganismosPjf2015.Models
                 {
                     while (reader.Read())
                     {
-                        CommonProperties funcion = new CommonProperties();
-                        funcion.IdElemento = Convert.ToInt32(reader["idFuncion"]);
-                        funcion.Descripcion = reader["Funcion"].ToString();
+                        CommonProperties funcion = new CommonProperties()
+                        {
+                            IdElemento = Convert.ToInt32(reader["idFuncion"]),
+                            Descripcion = reader["Funcion"].ToString()
+                        };
 
                         funciones.Add(funcion);
                     }
@@ -51,16 +51,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionesModel", 0);
             }
             finally
             {

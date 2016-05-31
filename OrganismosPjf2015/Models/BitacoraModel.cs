@@ -22,9 +22,8 @@ namespace OrganismosPjf2015.Models
 
             try
             {
-                string sqlCadena = "SELECT * FROM Bitacora WHERE Id = 0";
                 dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+                dataAdapter.SelectCommand = new OleDbCommand("SELECT * FROM Bitacora WHERE Id = 0", oleConne);
 
                 dataAdapter.Fill(dataSet, "Bitacora");
 
@@ -63,16 +62,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, BitacoraModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, BitacoraModel", 0);
             }
             finally
             {

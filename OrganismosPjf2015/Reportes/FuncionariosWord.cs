@@ -30,9 +30,9 @@ namespace OrganismosPjf2015.Reportes
             {
                 par.Range.Font.Bold = 0;
                 par.Range.Font.Size = Convert.ToInt32(ConfigurationManager.AppSettings["FontSize"]);
-                par.Range.Font.Name = ConfigurationManager.AppSettings["FontFamily"].ToString();
+                par.Range.Font.Name = ConfigurationManager.AppSettings["FontFamily"];
 
-                par.Range.Text = funcionario.Puesto + " " + funcionario.Apellidos + " " + funcionario.Nombre;
+                par.Range.Text = String.Format("{0} {1} {2}", funcionario.Puesto, funcionario.Apellidos, funcionario.Nombre);
                 par.Range.InsertParagraphAfter();
             }
 

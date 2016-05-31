@@ -38,7 +38,7 @@ namespace OrganismosPjf2015.Reportes
             {
                 par.Range.Font.Bold = 1;
                 par.Range.Font.Size = Convert.ToInt32(ConfigurationManager.AppSettings["FontSize"]);
-                par.Range.Font.Name = ConfigurationManager.AppSettings["FontFamily"].ToString();
+                par.Range.Font.Name = ConfigurationManager.AppSettings["FontFamily"];
 
                 par.Range.Text = organismo.Organismo;
                 par.Range.InsertParagraphAfter();
@@ -51,9 +51,9 @@ namespace OrganismosPjf2015.Reportes
                                  where n.IdCiudad == organismo.Ciudad
                                  select n).ToList()[0];
 
-                    par.Range.Text = cd.CiudadStr + ", " + (from n in CiudadesSingleton.Estados
-                                                            where n.IdEstado == cd.IdEstado
-                                                            select n.Abrev).ToList()[0];
+                    par.Range.Text = String.Format("{0}, {1}", cd.CiudadStr, (from n in CiudadesSingleton.Estados
+                                                                              where n.IdEstado == cd.IdEstado
+                                                                              select n.Abrev).ToList()[0]);
 
                     par.Range.InsertParagraphAfter();
                 }
@@ -61,7 +61,15 @@ namespace OrganismosPjf2015.Reportes
                 foreach (Funcionarios funcionario in organismo.ListaFuncionarios)
                 {
 
-                    par.Range.Text = funcionario.Texto + " " + funcionario.Puesto + " " + funcionario.Nombre + " " + funcionario.Apellidos;
+                    if (organismo.TipoOrganismo == 3)
+                    { 
+                        if(String.IsNullOrEmpty(funcionario.Texto))
+                            par.Range.Text = String.Format("{0} {1} {2}", funcionario.Puesto, funcionario.Nombre, funcionario.Apellidos);
+                        else
+                            par.Range.Text = String.Format("{0} {1} {2}", funcionario.Texto, funcionario.Nombre, funcionario.Apellidos);
+                    }
+                    else
+                        par.Range.Text = String.Format("{0} {1} {2}", funcionario.Puesto, funcionario.Nombre, funcionario.Apellidos);
 
                     if (funcionario.EnFunciones > 100)
                     {
@@ -71,11 +79,11 @@ namespace OrganismosPjf2015.Reportes
                                               select n.Descripcion).ToList()[0];
                     }
 
-                    //if (!String.IsNullOrEmpty(funcionario.Texto.Trim()))
-                    //{
-                    //    par.Range.InsertParagraphAfter();
-                    //    par.Range.Text = "(" + this.GetCompleteDate(funcionario.Texto) + ")";
-                    //}
+                    if (!String.IsNullOrEmpty(funcionario.Texto.Trim()) && organismo.TipoOrganismo != 3)
+                    {
+                        par.Range.InsertParagraphAfter();
+                        par.Range.Text = String.Format("({0})", this.GetCompleteDate(funcionario.Texto));
+                    }
                     par.Range.InsertParagraphAfter();
                     par.Range.ParagraphFormat.SpaceAfter = 0;
                 }
@@ -96,7 +104,7 @@ namespace OrganismosPjf2015.Reportes
 
                 string[] breakDate = justDate.Split('/');
 
-                justDate = "A partir del " + GetDay(breakDate[0]) + " de " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Convert.ToInt32(breakDate[1])) + " de " + breakDate[2];
+                justDate = String.Format("A partir del {0} de {1} de {2}", GetDay(breakDate[0]), CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Convert.ToInt32(breakDate[1])), breakDate[2]);
 
                 return justDate;
             }

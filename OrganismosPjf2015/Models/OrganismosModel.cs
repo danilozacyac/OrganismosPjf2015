@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
-using System.Windows.Forms;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
 
@@ -34,13 +33,14 @@ namespace OrganismosPjf2015.Models
 
             String sqlCadena = "SELECT O.*, C.Ciudad, E.Abrev " +
                                "FROM Organismos O INNER JOIN (Ciudades C INNER JOIN Estados E ON C.IdEstado = E.IdEstado) " +
-                               " ON O.Ciudad = C.IdCiudad WHERE TpoOrg = " + tipoOrganismo + " ORDER BY OrdenImpr";
+                               " ON O.Ciudad = C.IdCiudad WHERE TpoOrg = @TipoOrg ORDER BY OrdenImpr";
 
             try
             {
                 oleConne.Open();
 
                 cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd.Parameters.AddWithValue("@TipoOrg", tipoOrganismo);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -75,16 +75,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             finally
             {
@@ -105,13 +101,14 @@ namespace OrganismosPjf2015.Models
             OleDbDataReader reader = null;
 
             String sqlCadena = "SELECT O.*, C.Ciudad, E.Abrev " +
-                               "FROM Organismos O INNER JOIN (Ciudades C INNER JOIN Estados E ON C.IdEstado = E.IdEstado) ON O.Ciudad = C.IdCiudad WHERE IdOrg = " + idOrganismo + " ORDER BY OrdenImpr";
+                               "FROM Organismos O INNER JOIN (Ciudades C INNER JOIN Estados E ON C.IdEstado = E.IdEstado) ON O.Ciudad = C.IdCiudad WHERE IdOrg = @IdOrg ORDER BY OrdenImpr";
 
             try
             {
                 oleConne.Open();
 
                 cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd.Parameters.AddWithValue("@IdOrg", idOrganismo);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -136,16 +133,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             finally
             {
@@ -171,9 +164,8 @@ namespace OrganismosPjf2015.Models
                 {
 
                     organismo.IdOrganismo = idOrg;
-                    string sqlCadena = "SELECT * FROM Organismos WHERE idOrg = 0";
                     dataAdapter = new OleDbDataAdapter();
-                    dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+                    dataAdapter.SelectCommand = new OleDbCommand("SELECT * FROM Organismos WHERE idOrg = 0", oleConne);
 
                     dataAdapter.Fill(dataSet, "Organismo");
 
@@ -217,12 +209,14 @@ namespace OrganismosPjf2015.Models
                     dataSet.Dispose();
                     dataAdapter.Dispose();
 
-                    Bitacora bitacora = new Bitacora();
-                    bitacora.IdMovimiento = 1;
-                    bitacora.IdElemento = organismo.IdOrganismo;
-                    bitacora.EdoActual = organismo.Organismo;
-                    bitacora.EdoAnterior = " ";
-                    bitacora.NombreEquipo = Environment.MachineName;
+                    Bitacora bitacora = new Bitacora()
+                    {
+                        IdMovimiento = 1,
+                        IdElemento = organismo.IdOrganismo,
+                        EdoActual = organismo.Organismo,
+                        EdoAnterior = " ",
+                        NombreEquipo = Environment.MachineName
+                    };
                     new BitacoraModel().SetNewBitacoraEntry(bitacora);
 
                 }
@@ -230,16 +224,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             finally
             {
@@ -304,16 +294,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             finally
             {
@@ -324,9 +310,7 @@ namespace OrganismosPjf2015.Models
         public void DeleteOrganismo(Organismos organismo)
         {
             OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd;
-
-            cmd = oleConne.CreateCommand();
+            OleDbCommand cmd = oleConne.CreateCommand();
             cmd.Connection = oleConne;
 
             try
@@ -341,16 +325,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             finally
             {
@@ -362,8 +342,7 @@ namespace OrganismosPjf2015.Models
 
         public static void SetNewIntegrantesCount()
         {
-            Organismos organismoDelete = new Organismos();
-            organismoDelete.IdOrganismo = 0;
+            Organismos organismoDelete = new Organismos() { IdOrganismo = 0 };
 
             new OrganismosModel().DeleteOrganismo(organismoDelete);
 
@@ -371,15 +350,13 @@ namespace OrganismosPjf2015.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT  IdOrg,COUNT(IdORG) AS Total FROM Rel_Org_Func GROUP BY IdOrg";
-
             Dictionary<int, int> orgInt = new Dictionary<int, int>();
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new OleDbCommand("SELECT  IdOrg,COUNT(IdORG) AS Total FROM Rel_Org_Func GROUP BY IdOrg", oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -393,16 +370,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             finally
             {
@@ -457,16 +430,12 @@ namespace OrganismosPjf2015.Models
                 catch (OleDbException ex)
                 {
                     string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                    MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                    ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
                 }
                 catch (Exception ex)
                 {
                     string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                    MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                    ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
                 }
                 finally
                 {
@@ -488,13 +457,11 @@ namespace OrganismosPjf2015.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT * FROM Rel_Org_Func WHERE IdOrg = @IdOrganismo";
-
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new OleDbCommand("SELECT * FROM Rel_Org_Func WHERE IdOrg = @IdOrganismo", oleConne);
                 cmd.Parameters.AddWithValue("@IdOrganismo", idOrganismo);
                 reader = cmd.ExecuteReader();
 
@@ -510,16 +477,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrganismosModel", "OrganismosPjf2015");
             }
             finally
             {

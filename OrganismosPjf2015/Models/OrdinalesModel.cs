@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Linq;
-using System.Windows.Forms;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
 
@@ -19,22 +18,22 @@ namespace OrganismosPjf2015.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT * FROM Ordinales";
-
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new OleDbCommand("SELECT * FROM Ordinales", oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        CommonProperties ordinal = new CommonProperties();
-                        ordinal.IdElemento = Convert.ToInt32(reader["idOrdinal"]);
-                        ordinal.Descripcion = reader["Ordinal"].ToString();
+                        CommonProperties ordinal = new CommonProperties()
+                        {
+                            IdElemento = Convert.ToInt32(reader["idOrdinal"]),
+                            Descripcion = reader["Ordinal"].ToString()
+                        };
 
                         ordinales.Add(ordinal);
                     }
@@ -43,16 +42,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrdinalesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, OrdinalesModel", 0);
             }
             finally
             {

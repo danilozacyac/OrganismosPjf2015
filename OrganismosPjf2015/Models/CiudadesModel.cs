@@ -19,23 +19,23 @@ namespace OrganismosPjf2015.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT * FROM Ciudades";
-
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new OleDbCommand("SELECT * FROM Ciudades", oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        Ciudad ciudad = new Ciudad();
-                        ciudad.IdCiudad = Convert.ToInt32(reader["idCiudad"]);
-                        ciudad.IdEstado = Convert.ToInt32(reader["idEstado"]);
-                        ciudad.CiudadStr = reader["Ciudad"].ToString();
+                        Ciudad ciudad = new Ciudad()
+                        {
+                            IdCiudad = Convert.ToInt32(reader["idCiudad"]),
+                            IdEstado = Convert.ToInt32(reader["idEstado"]),
+                            CiudadStr = reader["Ciudad"].ToString()
+                        };
 
                         ciudades.Add(ciudad);
                     }
@@ -44,16 +44,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, CiudadesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, CiudadesModel", 0);
             }
             finally
             {

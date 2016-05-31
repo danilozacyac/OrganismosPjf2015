@@ -37,9 +37,9 @@ namespace OrganismosPjf2015.Models
             {
                 idIntegracion = DataBaseUtilities.GetNextIdForUse("Integraciones", "IdIntegracion", oleConne);
 
-                string sqlCadena = "SELECT * FROM Integraciones WHERE IdIntegracion = 0";
+                const string SqlQuery = "SELECT * FROM Integraciones WHERE IdIntegracion = 0";
                 dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+                dataAdapter.SelectCommand = new OleDbCommand(SqlQuery, oleConne);
 
                 dataAdapter.Fill(dataSet, "Integraciones");
 
@@ -69,16 +69,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             finally
             {
@@ -102,9 +98,9 @@ namespace OrganismosPjf2015.Models
             {
                 foreach (int funcionario in listaFuncionarios)
                 {
-                    string sqlCadena = "SELECT * FROM HistorialIntegracion WHERE IdIntegracion = 0";
+                    const string SqlQuery = "SELECT * FROM HistorialIntegracion WHERE IdIntegracion = 0";
                     dataAdapter = new OleDbDataAdapter();
-                    dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+                    dataAdapter.SelectCommand = new OleDbCommand(SqlQuery, oleConne);
 
                     dataAdapter.Fill(dataSet, "HistorialIntegracion");
 
@@ -131,16 +127,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             finally
             {
@@ -161,9 +153,9 @@ namespace OrganismosPjf2015.Models
             {
                 foreach (Funcionarios funcionario in listaFuncionarios)
                 {
-                    string sqlCadena = "SELECT * FROM HistorialIntegracion WHERE IdIntegracion = 0";
+                    const string SqlQuery = "SELECT * FROM HistorialIntegracion WHERE IdIntegracion = 0";
                     dataAdapter = new OleDbDataAdapter();
-                    dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+                    dataAdapter.SelectCommand = new OleDbCommand(SqlQuery, oleConne);
 
                     dataAdapter.Fill(dataSet, "HistorialIntegracion");
 
@@ -190,16 +182,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             finally
             {
@@ -218,13 +206,13 @@ namespace OrganismosPjf2015.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT MAX(IdIntegracion) as Ultima FROM Integraciones WHERE IdOrganismo = @IdOrganismo";
+            const String SqlQuery = "SELECT MAX(IdIntegracion) as Ultima FROM Integraciones WHERE IdOrganismo = @IdOrganismo";
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new OleDbCommand(SqlQuery, oleConne);
                 cmd.Parameters.AddWithValue("@IdOrganismo", idOrganismo);
                 reader = cmd.ExecuteReader();
 
@@ -239,16 +227,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             finally
             {
@@ -276,9 +260,9 @@ namespace OrganismosPjf2015.Models
             {
                 int ultimaIntegracionOrganismo = this.GetLastIntegracion();
 
-                string sqlCadena = "SELECT * FROM HistorialPresidentes WHERE IdIntegracion = 0";
+                const string SqlQuery = "SELECT * FROM HistorialPresidentes WHERE IdIntegracion = 0";
                 dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+                dataAdapter.SelectCommand = new OleDbCommand(SqlQuery, oleConne);
 
                 dataAdapter.Fill(dataSet, "HistorialPresidentes");
 
@@ -308,16 +292,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             finally
             {
@@ -360,16 +340,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             finally
             {
@@ -393,7 +369,7 @@ namespace OrganismosPjf2015.Models
             OleDbCommand cmd = null;
             OleDbDataReader reader = null;
 
-            String sqlCadena = "SELECT IdIntegracion,FechaIntegracion FROM Integraciones WHERE IdOrganismo = @IdOrganismo";
+            const String SqlQuery = "SELECT IdIntegracion,FechaIntegracion FROM Integraciones WHERE IdOrganismo = @IdOrganismo";
 
             FuncionariosModel model = new FuncionariosModel();
 
@@ -401,7 +377,7 @@ namespace OrganismosPjf2015.Models
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new OleDbCommand(SqlQuery, oleConne);
                 cmd.Parameters.AddWithValue("@IdOrganismo", idOrganismo);
                 reader = cmd.ExecuteReader();
 
@@ -423,16 +399,12 @@ namespace OrganismosPjf2015.Models
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-
-                MessageBox.Show("Error ({0}) : {1}" + ex.Source + ex.Message, methodName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                ErrorUtilities.SetNewErrorMessage(ex, methodName, 0);
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
             }
             finally
             {
