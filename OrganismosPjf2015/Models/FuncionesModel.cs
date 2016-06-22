@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
@@ -20,9 +20,9 @@ namespace OrganismosPjf2015.Models
         {
             ObservableCollection<CommonProperties> funciones = new ObservableCollection<CommonProperties>();
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
             const String SqlQuery = "SELECT * FROM Funciones WHERE TipoFuncion = @TipoFuncion OR TipoFuncion = 0 ORDER BY IdFuncion";
 
@@ -30,7 +30,7 @@ namespace OrganismosPjf2015.Models
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(SqlQuery, oleConne);
+                cmd = new SqlCommand(SqlQuery, oleConne);
                 cmd.Parameters.AddWithValue("@TipoFuncion", tipoFuncion);
                 reader = cmd.ExecuteReader();
 
@@ -48,7 +48,7 @@ namespace OrganismosPjf2015.Models
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionesModel", 0);

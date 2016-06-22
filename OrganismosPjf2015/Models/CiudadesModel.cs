@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Windows.Forms;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
 
@@ -15,15 +14,15 @@ namespace OrganismosPjf2015.Models
         {
             ObservableCollection<Ciudad> ciudades = new ObservableCollection<Ciudad>();
 
-            OleDbConnection oleConne = new OleDbConnection( ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection( ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand("SELECT * FROM Ciudades", oleConne);
+                cmd = new SqlCommand("SELECT * FROM Ciudades", oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -41,7 +40,7 @@ namespace OrganismosPjf2015.Models
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, CiudadesModel", 0);

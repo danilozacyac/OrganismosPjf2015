@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
@@ -14,48 +14,48 @@ namespace OrganismosPjf2015.Models
         public ObservableCollection<Funcionarios> GetFuncionarios(int tipoOrganismo)
         {
             ObservableCollection<Funcionarios> funcionarios = new ObservableCollection<Funcionarios>();
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
 
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
-            String sqlCadena = "SELECT F.*, R.IdOrg, R.Funcion FROM Funcionarios F LEFT JOIN Rel_Org_Func R ON F.IdFunc = R.IdFunc  ORDER BY Apellidos";
+            String sqlCadena = "SELECT F.*, R.IdOrganismo, R.Funcion FROM Funcionarios F LEFT JOIN Rel_Org_Func R ON F.IdFuncionario = R.IdFuncionario  ORDER BY Apellidos";
 
             if (tipoOrganismo == 0)
-                sqlCadena = "SELECT F.*, R.IdOrg, R.Funcion FROM Funcionarios F LEFT JOIN Rel_Org_Func R ON F.IdFunc = R.IdFunc  ORDER BY Apellidos";
+                sqlCadena = "SELECT F.*, R.IdOrganismo, R.Funcion FROM Funcionarios F LEFT JOIN Rel_Org_Func R ON F.IdFuncionario = R.IdFuncionario  ORDER BY Apellidos";
             else if (tipoOrganismo == 1 || tipoOrganismo == 2)
-                sqlCadena = "SELECT F.*, R.IdOrg, R.Funcion FROM Funcionarios F LEFT JOIN Rel_Org_Func R ON F.IdFunc = R.IdFunc WHERE Puesto = 'Mgdo.' OR Puesto = 'Mgda.' ORDER BY Apellidos";
+                sqlCadena = "SELECT F.*, R.IdOrganismo, R.Funcion FROM Funcionarios F LEFT JOIN Rel_Org_Func R ON F.IdFuncionario = R.IdFuncionario WHERE Puesto = 'Mgdo.' OR Puesto = 'Mgda.' ORDER BY Apellidos";
             else if (tipoOrganismo == 3)
-                sqlCadena = "SELECT F.*, R.IdOrg, R.Funcion FROM Funcionarios F LEFT JOIN Rel_Org_Func R ON F.IdFunc = R.IdFunc WHERE Puesto = 'Juez' ORDER BY Apellidos";
+                sqlCadena = "SELECT F.*, R.IdOrganismo, R.Funcion FROM Funcionarios F LEFT JOIN Rel_Org_Func R ON F.IdFuncionario = R.IdFuncionario WHERE Puesto = 'Juez' ORDER BY Apellidos";
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new SqlCommand(sqlCadena, oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        Funcionarios funcionario = new Funcionarios()
-                        {
-                            IdFuncionario = Convert.ToInt32(reader["idFunc"]),
-                            IdOrganismo = reader["IdOrg"] as int? ?? 0,
-                            Puesto = reader["Puesto"].ToString(),
-                            Apellidos = reader["Apellidos"].ToString(),
-                            Nombre = reader["Nombre"].ToString(),
-                            Texto = reader["Texto"].ToString(),
-                            Activo = reader["Activo"] as int? ?? 0,
-                            EnFunciones = (reader["Funcion"] != DBNull.Value) ? Convert.ToInt16(reader["Funcion"]) : 0
-                        };
+                        Funcionarios funcionario = new Funcionarios();
+
+                        funcionario.IdFuncionario = Convert.ToInt32(reader["IdFuncionario"]);
+                        funcionario.IdOrganismo = Convert.ToInt32(reader["IdOrganismo"]);
+                        funcionario.Puesto = reader["Puesto"].ToString();
+                        funcionario.Apellidos = reader["Apellidos"].ToString();
+                        funcionario.Nombre = reader["Nombre"].ToString();
+                        funcionario.Texto = reader["Texto"].ToString();
+                        funcionario.Activo = reader["Activo"] as int? ?? 0;
+                        funcionario.EnFunciones = (reader["Funcion"] != DBNull.Value) ? Convert.ToInt16(reader["Funcion"]) : 0;
+                        
 
                         funcionarios.Add(funcionario);
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
@@ -84,10 +84,10 @@ namespace OrganismosPjf2015.Models
         //{
 
         //    ObservableCollection<Funcionarios> funcionarios = new ObservableCollection<Funcionarios>();
-        //    OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+        //    SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
 
-        //    OleDbCommand cmd = null;
-        //    OleDbDataReader reader = null;
+        //    SqlCommand cmd = null;
+        //    SqlDataReader reader = null;
 
         //    String sqlCadena = "";
 
@@ -102,7 +102,7 @@ namespace OrganismosPjf2015.Models
         //    {
         //        oleConne.Open();
 
-        //        cmd = new OleDbCommand(sqlCadena, oleConne);
+        //        cmd = new SqlCommand(sqlCadena, oleConne);
         //        reader = cmd.ExecuteReader();
 
         //        if (reader.HasRows)
@@ -110,7 +110,7 @@ namespace OrganismosPjf2015.Models
         //            while (reader.Read())
         //            {
         //                Funcionarios funcionario = new Funcionarios();
-        //                funcionario.IdFuncionario = Convert.ToInt32(reader["idFunc"]);
+        //                funcionario.IdFuncionario = Convert.ToInt32(reader["IdFuncionario"]);
         //                funcionario.IdOrganismo = reader["IdOrg"] as int? ?? 0;
         //                funcionario.Puesto = reader["Puesto"].ToString();
         //                funcionario.Apellidos = reader["Apellidos"].ToString();
@@ -121,7 +121,7 @@ namespace OrganismosPjf2015.Models
         //            }
         //        }
         //    }
-        //    catch (OleDbException ex)
+        //    catch (SqlException ex)
         //    {
         //        string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
 
@@ -154,20 +154,20 @@ namespace OrganismosPjf2015.Models
         {
             ObservableCollection<Funcionarios> funcionarios = new ObservableCollection<Funcionarios>();
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
-            String sqlCadena = "SELECT F.*,R.*" +
-                               "FROM (Organismos O INNER JOIN Rel_Org_Func R ON O.IdOrg = R.IdOrg) " +
-                               "INNER JOIN Funcionarios F ON R.IdFunc = F.IdFunc WHERE O.IdOrg = @IdOrganismo " +
+            String sqlCadena = "SELECT F.*,R.IdOrganismo,R.Funcion " +
+                               "FROM Organismos O INNER JOIN Rel_Org_Func R ON O.IdOrganismo = R.IdOrganismo " +
+                               "INNER JOIN Funcionarios F ON R.IdFuncionario = F.IdFuncionario WHERE O.IdOrganismo = @IdOrganismo " +
                                " ORDER BY Apellidos";
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new SqlCommand(sqlCadena, oleConne);
                 cmd.Parameters.AddWithValue("@IdOrganismo", idOrganismo);
                 reader = cmd.ExecuteReader();
 
@@ -177,7 +177,7 @@ namespace OrganismosPjf2015.Models
                     {
                         Funcionarios funcionario = new Funcionarios()
                         {
-                            IdFuncionario = Convert.ToInt32(reader["F.idFunc"]),
+                            IdFuncionario = Convert.ToInt32(reader["IdFuncionario"]),
                             Puesto = reader["Puesto"].ToString(),
                             Apellidos = reader["Apellidos"].ToString(),
                             Nombre = reader["Nombre"].ToString(),
@@ -189,7 +189,7 @@ namespace OrganismosPjf2015.Models
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
@@ -218,19 +218,19 @@ namespace OrganismosPjf2015.Models
         {
             ObservableCollection<Funcionarios> funcionarios = new ObservableCollection<Funcionarios>();
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
             String sqlCadena = "SELECT F.*, H.IdFuncionario " +
-                               " FROM HistorialIntegracion H INNER JOIN Funcionarios F ON H.IdFuncionario = F.IdFunc " +
+                               " FROM HistorialIntegracion H INNER JOIN Funcionarios F ON H.IdFuncionario = F.IdFuncionario " +
                                " WHERE IdIntegracion = @IdIntegracion";
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new SqlCommand(sqlCadena, oleConne);
                 cmd.Parameters.AddWithValue("@IdIntegracion", idIntegracion);
                 reader = cmd.ExecuteReader();
 
@@ -240,7 +240,7 @@ namespace OrganismosPjf2015.Models
                     {
                         Funcionarios funcionario = new Funcionarios()
                         {
-                            IdFuncionario = Convert.ToInt32(reader["idFunc"]),
+                            IdFuncionario = Convert.ToInt32(reader["IdFuncionario"]),
                             Puesto = reader["Puesto"].ToString(),
                             Apellidos = reader["Apellidos"].ToString(),
                             Nombre = reader["Nombre"].ToString(),
@@ -251,7 +251,7 @@ namespace OrganismosPjf2015.Models
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
@@ -280,20 +280,20 @@ namespace OrganismosPjf2015.Models
         {
             ObservableCollection<Integraciones> listaIntegracion = new ObservableCollection<Integraciones>();
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
             String sqlCadena = "SELECT H.IdIntegracion, I.FechaIntegracion, O.Organismo " +
                                 " FROM (HistorialIntegracion H INNER JOIN Integraciones I ON H.IdIntegracion = I.IdIntegracion) " + 
-                                " INNER JOIN Organismos O ON I.IdOrganismo = O.IdOrg " + 
+                                " INNER JOIN Organismos O ON I.IdOrganismo = O.IdOrganismo " + 
                                 " WHERE H.IdFuncionario = @IdFuncionario";
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new SqlCommand(sqlCadena, oleConne);
                 cmd.Parameters.AddWithValue("@IdFuncionario", idFuncionario);
                 reader = cmd.ExecuteReader();
 
@@ -312,7 +312,7 @@ namespace OrganismosPjf2015.Models
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
@@ -336,19 +336,19 @@ namespace OrganismosPjf2015.Models
         {
             ObservableCollection<Funcionarios> funcionarios = new ObservableCollection<Funcionarios>();
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
             String sqlCadena = "SELECT F.*, H.FechaCambio " +
-                               " FROM HistorialPresidentes H INNER JOIN Funcionarios F ON H.IdFuncionarioPresidente = F.IdFunc " +
+                               " FROM HistorialPresidentes H INNER JOIN Funcionarios F ON H.IdFuncionarioPresidente = F.IdFuncionario " +
                                " WHERE IdIntegracion = @IdIntegracion";
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new SqlCommand(sqlCadena, oleConne);
                 cmd.Parameters.AddWithValue("@IdIntegracion", idIntegracion);
                 reader = cmd.ExecuteReader();
 
@@ -358,7 +358,7 @@ namespace OrganismosPjf2015.Models
                     {
                         Funcionarios funcionario = new Funcionarios()
                         {
-                            IdFuncionario = Convert.ToInt32(reader["idFunc"]),
+                            IdFuncionario = Convert.ToInt32(reader["IdFuncionario"]),
                             Puesto = reader["Puesto"].ToString(),
                             Apellidos = reader["Apellidos"].ToString(),
                             Nombre = reader["Nombre"].ToString(),
@@ -369,7 +369,7 @@ namespace OrganismosPjf2015.Models
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
@@ -393,27 +393,27 @@ namespace OrganismosPjf2015.Models
         {
             int idOrganismo = 0;
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
-            String sqlCadena = "SELECT IdOrg FROM Rel_Org_Func WHERE IdFunc = " + funcionario.IdFuncionario;
+            String sqlCadena = "SELECT IdOrganismo FROM Rel_Org_Func WHERE IdFuncionario = " + funcionario.IdFuncionario;
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new SqlCommand(sqlCadena, oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
                 {
                     reader.Read();
 
-                    idOrganismo = Convert.ToInt32(reader["IdOrg"]);
+                    idOrganismo = Convert.ToInt32(reader["IdOrganismo"]);
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
@@ -435,24 +435,24 @@ namespace OrganismosPjf2015.Models
 
         public void AddNewFuncionario(Funcionarios funcionario, Organismos organismo)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter;
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
-            int idFuncionario = DataBaseUtilities.GetNextIdForUse("Funcionarios", "IdFunc", oleConne);
+            int idFuncionario = DataBaseUtilities.GetNextIdForUse("Funcionarios", "IdFuncionario", oleConne);
             if (idFuncionario != 0)
             {
                 funcionario.IdFuncionario = idFuncionario;
                 
-                dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand("SELECT * FROM Funcionarios WHERE idFunc = 0", oleConne);
+                dataAdapter = new SqlDataAdapter();
+                dataAdapter.SelectCommand = new SqlCommand("SELECT * FROM Funcionarios WHERE IdFuncionario = 0", oleConne);
 
                 dataAdapter.Fill(dataSet, "Funcionario");
 
                 dr = dataSet.Tables["Funcionario"].NewRow();
-                dr["idFunc"] = idFuncionario;
+                dr["IdFuncionario"] = idFuncionario;
                 dr["Puesto"] = funcionario.Puesto;
                 dr["Apellidos"] = funcionario.Apellidos;
                 dr["Nombre"] = funcionario.Nombre;
@@ -464,16 +464,16 @@ namespace OrganismosPjf2015.Models
 
                 dataAdapter.InsertCommand = oleConne.CreateCommand();
                 dataAdapter.InsertCommand.CommandText =
-                                                       "INSERT INTO Funcionarios(idFunc,Puesto,Apellidos,Nombre,Activo,Texto,InicialApellido)" +
-                                                       " VALUES(@idFunc,@Puesto,@Apellidos,@Nombre,@Activo,@Texto,@InicialApellido)";
+                                                       "INSERT INTO Funcionarios(IdFuncionario,Puesto,Apellidos,Nombre,Activo,Texto,InicialApellido)" +
+                                                       " VALUES(@IdFuncionario,@Puesto,@Apellidos,@Nombre,@Activo,@Texto,@InicialApellido)";
 
-                dataAdapter.InsertCommand.Parameters.Add("@idFunc", OleDbType.Numeric, 0, "idFunc");
-                dataAdapter.InsertCommand.Parameters.Add("@Puesto", OleDbType.VarChar, 0, "Puesto");
-                dataAdapter.InsertCommand.Parameters.Add("@Apellidos", OleDbType.VarChar, 0, "Apellidos");
-                dataAdapter.InsertCommand.Parameters.Add("@Nombre", OleDbType.VarChar, 0, "Nombre");
-                dataAdapter.InsertCommand.Parameters.Add("@Activo", OleDbType.Numeric, 0, "Activo");
-                dataAdapter.InsertCommand.Parameters.Add("@Texto", OleDbType.VarChar, 0, "Texto");
-                dataAdapter.InsertCommand.Parameters.Add("@InicialApellido", OleDbType.VarChar, 0, "InicialApellido");
+                dataAdapter.InsertCommand.Parameters.Add("@IdFuncionario", SqlDbType.Int, 0, "IdFuncionario");
+                dataAdapter.InsertCommand.Parameters.Add("@Puesto", SqlDbType.VarChar, 0, "Puesto");
+                dataAdapter.InsertCommand.Parameters.Add("@Apellidos", SqlDbType.VarChar, 0, "Apellidos");
+                dataAdapter.InsertCommand.Parameters.Add("@Nombre", SqlDbType.VarChar, 0, "Nombre");
+                dataAdapter.InsertCommand.Parameters.Add("@Activo", SqlDbType.Int, 0, "Activo");
+                dataAdapter.InsertCommand.Parameters.Add("@Texto", SqlDbType.VarChar, 0, "Texto");
+                dataAdapter.InsertCommand.Parameters.Add("@InicialApellido", SqlDbType.VarChar, 0, "InicialApellido");
 
                 dataAdapter.Update(dataSet, "Funcionario");
 
@@ -489,20 +489,20 @@ namespace OrganismosPjf2015.Models
 
         public void UpdateFuncionario(Funcionarios funcionario)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
-            string sqlCadena = "SELECT * FROM Funcionarios WHERE idFunc = " + funcionario.IdFuncionario;
-            dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+            string sqlCadena = "SELECT * FROM Funcionarios WHERE IdFuncionario = " + funcionario.IdFuncionario;
+            dataAdapter.SelectCommand = new SqlCommand(sqlCadena, oleConne);
 
             dataAdapter.Fill(dataSet, "Funcionario");
 
             dr = dataSet.Tables["Funcionario"].Rows[0];
             dr.BeginEdit();
-            dr["idFunc"] = funcionario.IdFuncionario;
+            dr["IdFuncionario"] = funcionario.IdFuncionario;
             dr["Puesto"] = funcionario.Puesto;
             dr["Apellidos"] = funcionario.Apellidos;
             dr["Nombre"] = funcionario.Nombre;
@@ -515,15 +515,15 @@ namespace OrganismosPjf2015.Models
             dataAdapter.UpdateCommand.CommandText =
                                                    "UPDATE Funcionarios SET Puesto = @Puesto,Apellidos = @Apellidos,Nombre = @Nombre," +
                                                    "Activo = @Activo,Texto = @Texto,InicialApellido = @InicialApellido " +
-                                                   " WHERE idFunc = @idFunc";
+                                                   " WHERE IdFuncionario = @IdFuncionario";
 
-            dataAdapter.UpdateCommand.Parameters.Add("@Puesto", OleDbType.VarChar, 0, "Puesto");
-            dataAdapter.UpdateCommand.Parameters.Add("@Apellidos", OleDbType.VarChar, 0, "Apellidos");
-            dataAdapter.UpdateCommand.Parameters.Add("@Nombre", OleDbType.VarChar, 0, "Nombre");
-            dataAdapter.UpdateCommand.Parameters.Add("@Activo", OleDbType.Numeric, 0, "Activo");
-            dataAdapter.UpdateCommand.Parameters.Add("@Texto", OleDbType.VarChar, 0, "Texto");
-            dataAdapter.UpdateCommand.Parameters.Add("@InicialApellido", OleDbType.VarChar, 0, "InicialApellido");
-            dataAdapter.UpdateCommand.Parameters.Add("@idFunc", OleDbType.Numeric, 0, "idFunc");
+            dataAdapter.UpdateCommand.Parameters.Add("@Puesto", SqlDbType.VarChar, 0, "Puesto");
+            dataAdapter.UpdateCommand.Parameters.Add("@Apellidos", SqlDbType.VarChar, 0, "Apellidos");
+            dataAdapter.UpdateCommand.Parameters.Add("@Nombre", SqlDbType.VarChar, 0, "Nombre");
+            dataAdapter.UpdateCommand.Parameters.Add("@Activo", SqlDbType.Int, 0, "Activo");
+            dataAdapter.UpdateCommand.Parameters.Add("@Texto", SqlDbType.VarChar, 0, "Texto");
+            dataAdapter.UpdateCommand.Parameters.Add("@InicialApellido", SqlDbType.VarChar, 0, "InicialApellido");
+            dataAdapter.UpdateCommand.Parameters.Add("@IdFuncionario", SqlDbType.Int, 0, "IdFuncionario");
 
             dataAdapter.Update(dataSet, "Funcionario");
 
@@ -540,14 +540,14 @@ namespace OrganismosPjf2015.Models
         /// <param name="funcionario"></param>
         private void UpdateFuncion(Funcionarios funcionario)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
-            string sqlCadena = "SELECT * FROM Rel_Org_Func WHERE idFunc = " + funcionario.IdFuncionario;
-            dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+            string sqlCadena = "SELECT * FROM Rel_Org_Func WHERE IdFuncionario = " + funcionario.IdFuncionario;
+            dataAdapter.SelectCommand = new SqlCommand(sqlCadena, oleConne);
 
             dataAdapter.Fill(dataSet, "Rel_Org_Func");
 
@@ -562,10 +562,10 @@ namespace OrganismosPjf2015.Models
                 dataAdapter.UpdateCommand = oleConne.CreateCommand();
                 dataAdapter.UpdateCommand.CommandText =
                                                        "UPDATE Rel_Org_Func SET Funcion = @Funcion " +
-                                                       " WHERE idFunc = @idFunc";
+                                                       " WHERE IdFuncionario = @IdFuncionario";
 
-                dataAdapter.UpdateCommand.Parameters.Add("@Funcion", OleDbType.Numeric, 0, "Funcion");
-                dataAdapter.UpdateCommand.Parameters.Add("@idFunc", OleDbType.Numeric, 0, "idFunc");
+                dataAdapter.UpdateCommand.Parameters.Add("@Funcion", SqlDbType.Int, 0, "Funcion");
+                dataAdapter.UpdateCommand.Parameters.Add("@IdFuncionario", SqlDbType.Int, 0, "IdFuncionario");
 
                 dataAdapter.Update(dataSet, "Rel_Org_Func");
             }
@@ -577,20 +577,20 @@ namespace OrganismosPjf2015.Models
 
         public void DeleteFuncionario(Funcionarios funcionario)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = oleConne.CreateCommand();
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = oleConne.CreateCommand();
             cmd.Connection = oleConne;
 
             try
             {
                 oleConne.Open();
 
-                cmd.CommandText = "DELETE FROM Rel_Org_Func WHERE idFunc = " + funcionario.IdFuncionario;
+                cmd.CommandText = "DELETE FROM Rel_Org_Func WHERE IdFuncionario = " + funcionario.IdFuncionario;
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "DELETE FROM Funcionarios WHERE idFunc = " + funcionario.IdFuncionario;
+                cmd.CommandText = "DELETE FROM Funcionarios WHERE IdFuncionario = " + funcionario.IdFuncionario;
                 cmd.ExecuteNonQuery();
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
@@ -609,14 +609,14 @@ namespace OrganismosPjf2015.Models
 
         public void DeleteTextoInicioNombramiento(Funcionarios funcionario)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
-            string sqlCadena = "SELECT * FROM Funcionarios WHERE idFunc = " + funcionario.IdFuncionario;
-            dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+            string sqlCadena = "SELECT * FROM Funcionarios WHERE IdFuncionario = " + funcionario.IdFuncionario;
+            dataAdapter.SelectCommand = new SqlCommand(sqlCadena, oleConne);
 
             dataAdapter.Fill(dataSet, "Funcionario");
 
@@ -629,7 +629,7 @@ namespace OrganismosPjf2015.Models
             dataAdapter.UpdateCommand.CommandText =
                 "UPDATE Funcionarios SET Texto = @Texto";
 
-            dataAdapter.UpdateCommand.Parameters.Add("@Texto", OleDbType.VarChar, 0, "Texto");
+            dataAdapter.UpdateCommand.Parameters.Add("@Texto", SqlDbType.VarChar, 0, "Texto");
 
             dataAdapter.Update(dataSet, "Funcionario");
 
@@ -640,22 +640,21 @@ namespace OrganismosPjf2015.Models
 
         public void DeleteRelacionFuncionario(Funcionarios funcionario)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = oleConne.CreateCommand();
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = oleConne.CreateCommand();
             cmd.Connection = oleConne;
 
-            String sqlCadena = "DELETE FROM Rel_Org_Func WHERE idOrg = @IdOrg AND idFunc = @IdFunc";
 
             try
             {
                 oleConne.Open();
 
-                cmd.CommandText = sqlCadena;
+                cmd.CommandText = "DELETE FROM Rel_Org_Func WHERE idOrganismo = @IdOrg AND IdFuncionario = @IdFuncionario";
                 cmd.Parameters.AddWithValue("@IdOrg", funcionario.IdOrganismo);
-                cmd.Parameters.AddWithValue("@IdFunc", funcionario.IdFuncionario);
+                cmd.Parameters.AddWithValue("@IdFuncionario", funcionario.IdFuncionario);
                 cmd.ExecuteNonQuery();
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);
@@ -674,21 +673,20 @@ namespace OrganismosPjf2015.Models
 
         public void InsertaRelacionFuncionario(Funcionarios funcionario)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
-            string sqlCadena = "SELECT * FROM Rel_Org_Func WHERE idFunc = 0";
-            dataAdapter = new OleDbDataAdapter();
-            dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+            string sqlCadena = "SELECT * FROM Rel_Org_Func WHERE IdFuncionario = 0";
+            dataAdapter.SelectCommand = new SqlCommand(sqlCadena, oleConne);
 
             dataAdapter.Fill(dataSet, "Relacion");
 
             dr = dataSet.Tables["Relacion"].NewRow();
-            dr["idOrg"] = funcionario.IdOrganismo;
-            dr["idFunc"] = funcionario.IdFuncionario;
+            dr["idOrganismo"] = funcionario.IdOrganismo;
+            dr["IdFuncionario"] = funcionario.IdFuncionario;
             dr["Funcion"] = 0;
             dr["Tels"] = "";
 
@@ -696,13 +694,13 @@ namespace OrganismosPjf2015.Models
 
             dataAdapter.InsertCommand = oleConne.CreateCommand();
             dataAdapter.InsertCommand.CommandText =
-                                                   "INSERT INTO Rel_Org_Func(IdOrg,IdFunc,Funcion,Tels)" +
+                                                   "INSERT INTO Rel_Org_Func(IdOrganismo,IdFuncionario,Funcion,Tels)" +
                                                    " VALUES(@IdOrg,@IdFunc,@Funcion,@Tels)";
 
-            dataAdapter.InsertCommand.Parameters.Add("@IdOrg", OleDbType.Numeric, 0, "IdOrg");
-            dataAdapter.InsertCommand.Parameters.Add("@IdFunc", OleDbType.Numeric, 0, "IdFunc");
-            dataAdapter.InsertCommand.Parameters.Add("@Funcion", OleDbType.Numeric, 0, "Funcion");
-            dataAdapter.InsertCommand.Parameters.Add("@Tels", OleDbType.LongVarChar, 0, "Tels");
+            dataAdapter.InsertCommand.Parameters.Add("@IdOrg", SqlDbType.Int, 0, "IdOrganismo");
+            dataAdapter.InsertCommand.Parameters.Add("@IdFunc", SqlDbType.Int, 0, "IdFuncionario");
+            dataAdapter.InsertCommand.Parameters.Add("@Funcion", SqlDbType.Int, 0, "Funcion");
+            dataAdapter.InsertCommand.Parameters.Add("@Tels", SqlDbType.VarChar, 0, "Tels");
 
             dataAdapter.Update(dataSet, "Relacion");
 
@@ -718,21 +716,20 @@ namespace OrganismosPjf2015.Models
         /// <param name="idOrganismo">Identificador del organismo al que se asigna</param>
         public void InsertaRelacionFuncionario(Funcionarios funcionario, int idOrganismo)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
-            string sqlCadena = "SELECT * FROM Rel_Org_Func WHERE idFunc = 0";
-            dataAdapter = new OleDbDataAdapter();
-            dataAdapter.SelectCommand = new OleDbCommand(sqlCadena, oleConne);
+            string sqlCadena = "SELECT * FROM Rel_Org_Func WHERE IdFuncionario = 0";
+            dataAdapter.SelectCommand = new SqlCommand(sqlCadena, oleConne);
 
             dataAdapter.Fill(dataSet, "Relacion");
 
             dr = dataSet.Tables["Relacion"].NewRow();
-            dr["idOrg"] = idOrganismo;
-            dr["idFunc"] = funcionario.IdFuncionario;
+            dr["idOrganismo"] = idOrganismo;
+            dr["IdFuncionario"] = funcionario.IdFuncionario;
             dr["Funcion"] = 0;
             dr["Tels"] = "";
 
@@ -740,13 +737,13 @@ namespace OrganismosPjf2015.Models
 
             dataAdapter.InsertCommand = oleConne.CreateCommand();
             dataAdapter.InsertCommand.CommandText =
-                                                   "INSERT INTO Rel_Org_Func(IdOrg,IdFunc,Funcion,Tels)" +
+                                                   "INSERT INTO Rel_Org_Func(IdOrganismo,IdFuncionario,Funcion,Tels)" +
                                                    " VALUES(@IdOrg,@IdFunc,@Funcion,@Tels)";
 
-            dataAdapter.InsertCommand.Parameters.Add("@IdOrg", OleDbType.Numeric, 0, "IdOrg");
-            dataAdapter.InsertCommand.Parameters.Add("@IdFunc", OleDbType.Numeric, 0, "IdFunc");
-            dataAdapter.InsertCommand.Parameters.Add("@Funcion", OleDbType.Numeric, 0, "Funcion");
-            dataAdapter.InsertCommand.Parameters.Add("@Tels", OleDbType.LongVarChar, 0, "Tels");
+            dataAdapter.InsertCommand.Parameters.Add("@IdOrg", SqlDbType.Int, 0, "IdOrganismo");
+            dataAdapter.InsertCommand.Parameters.Add("@IdFunc", SqlDbType.Int, 0, "IdFuncionario");
+            dataAdapter.InsertCommand.Parameters.Add("@Funcion", SqlDbType.Int, 0, "Funcion");
+            dataAdapter.InsertCommand.Parameters.Add("@Tels", SqlDbType.VarChar, 0, "Tels");
 
             dataAdapter.Update(dataSet, "Relacion");
 
@@ -759,9 +756,9 @@ namespace OrganismosPjf2015.Models
         {
             ObservableCollection<CommonProperties> estados = new ObservableCollection<CommonProperties>();
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
             String sqlCadena = "SELECT * FROM EstadoFuncionarios ";
 
@@ -769,7 +766,7 @@ namespace OrganismosPjf2015.Models
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new SqlCommand(sqlCadena, oleConne);
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -781,7 +778,7 @@ namespace OrganismosPjf2015.Models
                     estados.Add(estado);
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, FuncionariosModel", 0);

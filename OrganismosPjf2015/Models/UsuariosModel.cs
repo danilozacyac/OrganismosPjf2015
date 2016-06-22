@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
@@ -12,20 +12,20 @@ namespace OrganismosPjf2015.Models
         public static  bool ObtenerUsuarioContraseña()
         {
             bool bExisteUsuario = false;
-            string sOleDb;
+            string sSql;
 
-            OleDbConnection connection = new OleDbConnection( ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlConnection connection = new SqlConnection( ConfigurationManager.ConnectionStrings["Directorio"].ConnectionString);
 
-            OleDbCommand cmd;
-            OleDbDataReader reader;
+            SqlCommand cmd;
+            SqlDataReader reader;
 
 
             try
             {
                 connection.Open();
 
-                sOleDb = "SELECT * FROM Usuarios WHERE usuario = @usuario";// AND Pass = @Pass";
-                cmd = new OleDbCommand(sOleDb, connection);
+                sSql = "SELECT * FROM Usuarios WHERE usuario = @usuario";// AND Pass = @Pass";
+                cmd = new SqlCommand(sSql, connection);
                 cmd.Parameters.AddWithValue("@usuario", Environment.UserName.ToUpper());
                 reader = cmd.ExecuteReader();
 
@@ -43,7 +43,7 @@ namespace OrganismosPjf2015.Models
                     Usuarios.IdUsuario = -1;
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, UsuariosModel", "OrganismosPjf2015");

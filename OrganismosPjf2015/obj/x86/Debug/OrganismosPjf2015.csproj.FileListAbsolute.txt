@@ -31,7 +31,6 @@ c:\users\lavega\documents\visual studio 2012\Projects\OrganismosPjf2015\Organism
 c:\users\lavega\documents\visual studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.csproj.GenerateResource.Cache
 c:\users\lavega\documents\visual studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.exe
 c:\users\lavega\documents\visual studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.pdb
-C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\ScjnUtilities.dll
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\ScjnUtilities.pdb
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.gridview.dll
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.gridview.xml
@@ -61,7 +60,70 @@ C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\Organism
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\HistorialOrganismos.g.cs
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\HistorialFuncionarios.baml
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\HistorialFuncionarios.g.cs
-C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\UIControls.dll
 C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\UIControls.pdb
 C:\windows\system32\obj\x86\Debug\OrganismosPjf2015.exe
 C:\windows\system32\obj\x86\Debug\OrganismosPjf2015.pdb
+C:\Users\lavega\Documents\Visual Studio 2012\Projects\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\ScjnUtilities.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\OrganismosPjf2015.exe.config
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.exe
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.pdb
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\OrganismosPjf2015.exe.manifest
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\OrganismosPjf2015.application
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\OrganismosPjf2015.exe
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\OrganismosPjf2015.pdb
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\Telerik.Windows.Controls.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.docking.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.gridview.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.input.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.navigation.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.ribbonview.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\Telerik.Windows.Data.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\ScjnUtilities.pdb
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\Telerik.Windows.Controls.xml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.docking.xml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.gridview.xml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.input.xml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.navigation.xml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\telerik.windows.controls.ribbonview.xml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\Telerik.Windows.Data.xml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\UIControls.pdb
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\de\Telerik.Windows.Controls.resources.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\es\Telerik.Windows.Controls.resources.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\fr\Telerik.Windows.Controls.resources.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\it\Telerik.Windows.Controls.resources.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\nl\Telerik.Windows.Controls.resources.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\bin\Debug\tr\Telerik.Windows.Controls.resources.dll
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.csprojResolveAssemblyReference.cache
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\AddUpdateFuncionario.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\ConfirmarIntegracion.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\MainWindow.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\MyUserControls\FuncionariosSelect.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrgWin.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\Reportes\OrganismosSelect.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\VerInfoOrganismo.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\AddUpdateFuncionario.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\AddUpdateOrganismo.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\ConfirmarIntegracion.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\HistorialFuncionarios.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\HistorialOrganismos.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\MainWindow.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\MyUserControls\Colegiados.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\MyUserControls\FuncionariosControl.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\MyUserControls\FuncionariosSelect.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrgWin.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\Reportes\OrganismosSelect.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\VerInfoOrganismo.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\App.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015_MarkupCompile.cache
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015_MarkupCompile.lref
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\AddUpdateOrganismo.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\HistorialFuncionarios.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\HistorialOrganismos.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\MyUserControls\Colegiados.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\MyUserControls\FuncionariosControl.baml
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.g.resources
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.Properties.Resources.resources
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.csproj.GenerateResource.Cache
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.exe.manifest
+C:\Users\lavega\Documents\GitHub\OrganismosPjf2015\OrganismosPjf2015\obj\x86\Debug\OrganismosPjf2015.application

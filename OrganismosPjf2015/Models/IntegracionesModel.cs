@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Windows.Forms;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
 
@@ -26,8 +25,8 @@ namespace OrganismosPjf2015.Models
         /// </summary>
         public int GetNewIntegracion()
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter;
 
             DataSet dataSet = new DataSet();
             DataRow dr;
@@ -38,8 +37,8 @@ namespace OrganismosPjf2015.Models
                 idIntegracion = DataBaseUtilities.GetNextIdForUse("Integraciones", "IdIntegracion", oleConne);
 
                 const string SqlQuery = "SELECT * FROM Integraciones WHERE IdIntegracion = 0";
-                dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand(SqlQuery, oleConne);
+                dataAdapter = new SqlDataAdapter();
+                dataAdapter.SelectCommand = new SqlCommand(SqlQuery, oleConne);
 
                 dataAdapter.Fill(dataSet, "Integraciones");
 
@@ -56,17 +55,17 @@ namespace OrganismosPjf2015.Models
                                                        "INSERT INTO Integraciones(IdIntegracion,IdOrganismo,FechaIntegracion,FechaIntegracionInt)" +
                                                        " VALUES(@IdIntegracion,@IdOrganismo,@FechaIntegracion,@FechaIntegracionInt)";
 
-                dataAdapter.InsertCommand.Parameters.Add("@IdIntegracion", OleDbType.Numeric, 0, "IdIntegracion");
-                dataAdapter.InsertCommand.Parameters.Add("@IdOrganismo", OleDbType.Numeric, 0, "IdOrganismo");
-                dataAdapter.InsertCommand.Parameters.Add("@FechaIntegracion", OleDbType.Date, 0, "FechaIntegracion");
-                dataAdapter.InsertCommand.Parameters.Add("@FechaIntegracionInt", OleDbType.LongVarChar, 0, "FechaIntegracionInt");
+                dataAdapter.InsertCommand.Parameters.Add("@IdIntegracion", SqlDbType.Int, 0, "IdIntegracion");
+                dataAdapter.InsertCommand.Parameters.Add("@IdOrganismo", SqlDbType.Int, 0, "IdOrganismo");
+                dataAdapter.InsertCommand.Parameters.Add("@FechaIntegracion", SqlDbType.Date, 0, "FechaIntegracion");
+                dataAdapter.InsertCommand.Parameters.Add("@FechaIntegracionInt", SqlDbType.VarChar, 0, "FechaIntegracionInt");
 
                 dataAdapter.Update(dataSet, "Integraciones");
 
                 dataSet.Dispose();
                 dataAdapter.Dispose();
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
@@ -88,8 +87,8 @@ namespace OrganismosPjf2015.Models
         /// </summary>
         public void SetIntegracionFuncionarios(List<int> listaFuncionarios,int idIntegracion)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter;
 
             DataSet dataSet = new DataSet();
             DataRow dr;
@@ -99,8 +98,8 @@ namespace OrganismosPjf2015.Models
                 foreach (int funcionario in listaFuncionarios)
                 {
                     const string SqlQuery = "SELECT * FROM HistorialIntegracion WHERE IdIntegracion = 0";
-                    dataAdapter = new OleDbDataAdapter();
-                    dataAdapter.SelectCommand = new OleDbCommand(SqlQuery, oleConne);
+                    dataAdapter = new SqlDataAdapter();
+                    dataAdapter.SelectCommand = new SqlCommand(SqlQuery, oleConne);
 
                     dataAdapter.Fill(dataSet, "HistorialIntegracion");
 
@@ -115,8 +114,8 @@ namespace OrganismosPjf2015.Models
                                                            "INSERT INTO HistorialIntegracion(IdIntegracion,IdFuncionario)" +
                                                            " VALUES(@IdIntegracion,@IdFuncionario)";
 
-                    dataAdapter.InsertCommand.Parameters.Add("@IdIntegracion", OleDbType.Numeric, 0, "IdIntegracion");
-                    dataAdapter.InsertCommand.Parameters.Add("@IdFuncionario", OleDbType.Numeric, 0, "IdFuncionario");
+                    dataAdapter.InsertCommand.Parameters.Add("@IdIntegracion", SqlDbType.Int, 0, "IdIntegracion");
+                    dataAdapter.InsertCommand.Parameters.Add("@IdFuncionario", SqlDbType.Int, 0, "IdFuncionario");
 
                     dataAdapter.Update(dataSet, "HistorialIntegracion");
 
@@ -124,7 +123,7 @@ namespace OrganismosPjf2015.Models
                     dataAdapter.Dispose();
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
@@ -143,8 +142,8 @@ namespace OrganismosPjf2015.Models
         
         public void SetIntegracionFuncionarios(ObservableCollection<Funcionarios> listaFuncionarios, int idIntegracion)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter;
 
             DataSet dataSet = new DataSet();
             DataRow dr;
@@ -154,8 +153,8 @@ namespace OrganismosPjf2015.Models
                 foreach (Funcionarios funcionario in listaFuncionarios)
                 {
                     const string SqlQuery = "SELECT * FROM HistorialIntegracion WHERE IdIntegracion = 0";
-                    dataAdapter = new OleDbDataAdapter();
-                    dataAdapter.SelectCommand = new OleDbCommand(SqlQuery, oleConne);
+                    dataAdapter = new SqlDataAdapter();
+                    dataAdapter.SelectCommand = new SqlCommand(SqlQuery, oleConne);
 
                     dataAdapter.Fill(dataSet, "HistorialIntegracion");
 
@@ -170,8 +169,8 @@ namespace OrganismosPjf2015.Models
                                                            "INSERT INTO HistorialIntegracion(IdIntegracion,IdFuncionario)" +
                                                            " VALUES(@IdIntegracion,@IdFuncionario)";
 
-                    dataAdapter.InsertCommand.Parameters.Add("@IdIntegracion", OleDbType.Numeric, 0, "IdIntegracion");
-                    dataAdapter.InsertCommand.Parameters.Add("@IdFuncionario", OleDbType.Numeric, 0, "IdFuncionario");
+                    dataAdapter.InsertCommand.Parameters.Add("@IdIntegracion", SqlDbType.Int, 0, "IdIntegracion");
+                    dataAdapter.InsertCommand.Parameters.Add("@IdFuncionario", SqlDbType.Int, 0, "IdFuncionario");
 
                     dataAdapter.Update(dataSet, "HistorialIntegracion");
 
@@ -179,7 +178,7 @@ namespace OrganismosPjf2015.Models
                     dataAdapter.Dispose();
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
@@ -202,9 +201,9 @@ namespace OrganismosPjf2015.Models
         public int GetLastIntegracion()
         {
             int idIntegracion = 0;
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
             const String SqlQuery = "SELECT MAX(IdIntegracion) as Ultima FROM Integraciones WHERE IdOrganismo = @IdOrganismo";
 
@@ -212,7 +211,7 @@ namespace OrganismosPjf2015.Models
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(SqlQuery, oleConne);
+                cmd = new SqlCommand(SqlQuery, oleConne);
                 cmd.Parameters.AddWithValue("@IdOrganismo", idOrganismo);
                 reader = cmd.ExecuteReader();
 
@@ -224,7 +223,7 @@ namespace OrganismosPjf2015.Models
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
@@ -250,8 +249,8 @@ namespace OrganismosPjf2015.Models
         /// <param name="idFuncionario">Identificador del Nuevo Presidente</param>
         public void SetNewPresidente(int idFuncionario)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter;
 
             DataSet dataSet = new DataSet();
             DataRow dr;
@@ -261,8 +260,8 @@ namespace OrganismosPjf2015.Models
                 int ultimaIntegracionOrganismo = this.GetLastIntegracion();
 
                 const string SqlQuery = "SELECT * FROM HistorialPresidentes WHERE IdIntegracion = 0";
-                dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand(SqlQuery, oleConne);
+                dataAdapter = new SqlDataAdapter();
+                dataAdapter.SelectCommand = new SqlCommand(SqlQuery, oleConne);
 
                 dataAdapter.Fill(dataSet, "HistorialPresidentes");
 
@@ -279,17 +278,17 @@ namespace OrganismosPjf2015.Models
                                                        "INSERT INTO HistorialPresidentes(IdIntegracion,IdFuncionarioPresidente,FechaCambio,FechaCambioInt)" +
                                                        " VALUES(@IdIntegracion,@IdFuncionarioPresidente,@FechaCambio,@FechaCambioInt)";
 
-                dataAdapter.InsertCommand.Parameters.Add("@IdIntegracion", OleDbType.Numeric, 0, "IdIntegracion");
-                dataAdapter.InsertCommand.Parameters.Add("@IdFuncionarioPresidente", OleDbType.Numeric, 0, "IdFuncionarioPresidente");
-                dataAdapter.InsertCommand.Parameters.Add("@FechaCambio", OleDbType.Date, 0, "FechaCambio");
-                dataAdapter.InsertCommand.Parameters.Add("@FechaCambioInt", OleDbType.Numeric, 0, "FechaCambioInt");
+                dataAdapter.InsertCommand.Parameters.Add("@IdIntegracion", SqlDbType.Int, 0, "IdIntegracion");
+                dataAdapter.InsertCommand.Parameters.Add("@IdFuncionarioPresidente", SqlDbType.Int, 0, "IdFuncionarioPresidente");
+                dataAdapter.InsertCommand.Parameters.Add("@FechaCambio", SqlDbType.Date, 0, "FechaCambio");
+                dataAdapter.InsertCommand.Parameters.Add("@FechaCambioInt", SqlDbType.Int, 0, "FechaCambioInt");
 
                 dataAdapter.Update(dataSet, "HistorialPresidentes");
 
                 dataSet.Dispose();
                 dataAdapter.Dispose();
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
@@ -312,9 +311,9 @@ namespace OrganismosPjf2015.Models
         public int GetLastPresident()
         {
             int presindente = 0;
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
             String sqlCadena = "SELECT TOP 1 I.IdIntegracion, H.IdFuncionarioPresidente, H.FechaCambio " +
                                " FROM Integraciones I INNER JOIN HistorialPresidentes H ON I.IdIntegracion = H.IdIntegracion " +
@@ -325,7 +324,7 @@ namespace OrganismosPjf2015.Models
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(sqlCadena, oleConne);
+                cmd = new SqlCommand(sqlCadena, oleConne);
                 cmd.Parameters.AddWithValue("@IdOrganismo", idOrganismo);
                 reader = cmd.ExecuteReader();
 
@@ -337,7 +336,7 @@ namespace OrganismosPjf2015.Models
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);
@@ -365,9 +364,9 @@ namespace OrganismosPjf2015.Models
         {
             ObservableCollection<Integraciones> listaIntegraciones = new ObservableCollection<Integraciones>();
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd = null;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
 
             const String SqlQuery = "SELECT IdIntegracion,FechaIntegracion FROM Integraciones WHERE IdOrganismo = @IdOrganismo";
 
@@ -377,7 +376,7 @@ namespace OrganismosPjf2015.Models
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand(SqlQuery, oleConne);
+                cmd = new SqlCommand(SqlQuery, oleConne);
                 cmd.Parameters.AddWithValue("@IdOrganismo", idOrganismo);
                 reader = cmd.ExecuteReader();
 
@@ -396,7 +395,7 @@ namespace OrganismosPjf2015.Models
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, IntegracionesModel", 0);

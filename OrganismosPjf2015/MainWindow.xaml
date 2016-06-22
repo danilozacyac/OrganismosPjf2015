@@ -21,7 +21,7 @@
                Source="Resources/addressbook_blue_512.png" />
         <telerik:RadBusyIndicator x:Name="BusyIndicator"
                                   Grid.Row="1"
-                                  IsIndeterminate="True"
-                                  telerik:StyleManager.Theme="Windows8Touch" />
+                                  telerik:StyleManager.Theme="Windows8Touch"
+                                  IsIndeterminate="True" />
     </Grid>
 </Window>

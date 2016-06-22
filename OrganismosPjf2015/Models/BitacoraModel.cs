@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Windows.Forms;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
 
@@ -14,16 +13,16 @@ namespace OrganismosPjf2015.Models
 
         public void SetNewBitacoraEntry(Bitacora bitacora)
         {
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbDataAdapter dataAdapter;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlDataAdapter dataAdapter;
 
             DataSet dataSet = new DataSet();
             DataRow dr;
 
             try
             {
-                dataAdapter = new OleDbDataAdapter();
-                dataAdapter.SelectCommand = new OleDbCommand("SELECT * FROM Bitacora WHERE Id = 0", oleConne);
+                dataAdapter = new SqlDataAdapter();
+                dataAdapter.SelectCommand = new SqlCommand("SELECT * FROM Bitacora WHERE Id = 0", oleConne);
 
                 dataAdapter.Fill(dataSet, "Bitacora");
 
@@ -44,14 +43,14 @@ namespace OrganismosPjf2015.Models
                                                        "INSERT INTO Bitacora(IdMovimiento,IdElemento,EdoActual,EdoAnterior,IdUsuario,FechaCambio,FechaCambioInt,NombreEquipo)" +
                                                        " VALUES(@IdMovimiento,@IdElemento,@EdoActual,@EdoAnterior,@IdUsuario,@FechaCambio,@FechaCambioInt,@NombreEquipo)";
 
-                dataAdapter.InsertCommand.Parameters.Add("@IdMovimiento", OleDbType.Numeric, 0, "IdMovimiento");
-                dataAdapter.InsertCommand.Parameters.Add("@IdElemento", OleDbType.Numeric, 0, "IdElemento");
-                dataAdapter.InsertCommand.Parameters.Add("@EdoActual", OleDbType.VarChar, 0, "EdoActual");
-                dataAdapter.InsertCommand.Parameters.Add("@EdoAnterior", OleDbType.VarChar, 0, "EdoAnterior");
-                dataAdapter.InsertCommand.Parameters.Add("@IdUsuario", OleDbType.Numeric, 0, "IdUsuario");
-                dataAdapter.InsertCommand.Parameters.Add("@FechaCambio", OleDbType.Date, 0, "FechaCambio");
-                dataAdapter.InsertCommand.Parameters.Add("@FechaCambioInt", OleDbType.Numeric, 0, "FechaCambioInt");
-                dataAdapter.InsertCommand.Parameters.Add("@NombreEquipo", OleDbType.VarChar, 0, "NombreEquipo");
+                dataAdapter.InsertCommand.Parameters.Add("@IdMovimiento", SqlDbType.Int, 0, "IdMovimiento");
+                dataAdapter.InsertCommand.Parameters.Add("@IdElemento", SqlDbType.Int, 0, "IdElemento");
+                dataAdapter.InsertCommand.Parameters.Add("@EdoActual", SqlDbType.VarChar, 0, "EdoActual");
+                dataAdapter.InsertCommand.Parameters.Add("@EdoAnterior", SqlDbType.VarChar, 0, "EdoAnterior");
+                dataAdapter.InsertCommand.Parameters.Add("@IdUsuario", SqlDbType.Int, 0, "IdUsuario");
+                dataAdapter.InsertCommand.Parameters.Add("@FechaCambio", SqlDbType.Date, 0, "FechaCambio");
+                dataAdapter.InsertCommand.Parameters.Add("@FechaCambioInt", SqlDbType.Int, 0, "FechaCambioInt");
+                dataAdapter.InsertCommand.Parameters.Add("@NombreEquipo", SqlDbType.VarChar, 0, "NombreEquipo");
 
                 dataAdapter.Update(dataSet, "Bitacora");
 
@@ -59,7 +58,7 @@ namespace OrganismosPjf2015.Models
                 dataAdapter.Dispose();
 
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, BitacoraModel", 0);

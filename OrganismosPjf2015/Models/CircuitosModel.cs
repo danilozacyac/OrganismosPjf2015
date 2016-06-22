@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using OrganismosPjf2015.Dao;
 using ScjnUtilities;
@@ -14,15 +14,15 @@ namespace OrganismosPjf2015.Models
         {
             List<CommonProperties> circuitos = new List<CommonProperties>();
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd;
-            OleDbDataReader reader = null;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd;
+            SqlDataReader reader = null;
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand("SELECT * FROM Circuitos", oleConne);
+                cmd = new SqlCommand("SELECT * FROM Circuitos", oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -40,7 +40,7 @@ namespace OrganismosPjf2015.Models
                 }
                 reader.Close();
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, CircuitosModel", 0);

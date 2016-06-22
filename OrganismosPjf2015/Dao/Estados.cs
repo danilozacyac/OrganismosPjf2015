@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Windows.Forms;
 using ScjnUtilities;
 
 namespace OrganismosPjf2015.Dao
@@ -53,15 +52,15 @@ namespace OrganismosPjf2015.Dao
         {
             List<Estados> estados = new List<Estados>();
 
-            OleDbConnection oleConne = new OleDbConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
-            OleDbCommand cmd;
-            OleDbDataReader reader;
+            SqlConnection oleConne = new SqlConnection(ConfigurationManager.ConnectionStrings["Directorio"].ToString());
+            SqlCommand cmd;
+            SqlDataReader reader;
 
             try
             {
                 oleConne.Open();
 
-                cmd = new OleDbCommand("SELECT * FROM Estados", oleConne);
+                cmd = new SqlCommand("SELECT * FROM Estados", oleConne);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -79,7 +78,7 @@ namespace OrganismosPjf2015.Dao
                     }
                 }
             }
-            catch (OleDbException ex)
+            catch (SqlException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception, Estados", "OrganismosPjf2015");
