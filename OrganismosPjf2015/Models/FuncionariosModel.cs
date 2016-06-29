@@ -42,7 +42,7 @@ namespace OrganismosPjf2015.Models
                         Funcionarios funcionario = new Funcionarios();
 
                         funcionario.IdFuncionario = Convert.ToInt32(reader["IdFuncionario"]);
-                        funcionario.IdOrganismo = Convert.ToInt32(reader["IdOrganismo"]);
+                        funcionario.IdOrganismo = reader["IdOrganismo"] as int? ?? 0;
                         funcionario.Puesto = reader["Puesto"].ToString();
                         funcionario.Apellidos = reader["Apellidos"].ToString();
                         funcionario.Nombre = reader["Nombre"].ToString();
