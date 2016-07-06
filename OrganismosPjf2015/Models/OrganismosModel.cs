@@ -188,7 +188,7 @@ namespace OrganismosPjf2015.Models
                     dataAdapter.InsertCommand.CommandText =
                                                            "INSERT INTO Organismos(IdOrganismo,IdTpoOrg,IdCircuito,IdOrdinal,IdMateria,Organismo,Direccion," +
                                                            "Tels,IdCiudad,Integrantes,OrdenImpr)" +
-                                                           " VALUES(@idOrg,@IdTpoOrg,@IdCircuito,@IdOrdinal,@IdMateria,@Organismo,@Direccion," +
+                                                           " VALUES(@IdOrganismo,@IdTpoOrg,@IdCircuito,@IdOrdinal,@IdMateria,@Organismo,@Direccion," +
                                                            "@Tels,@IdCiudad,@Integrantes,@OrdenImpr)";
 
                     dataAdapter.InsertCommand.Parameters.Add("@IdOrganismo", SqlDbType.Int, 0, "IdOrganismo");
