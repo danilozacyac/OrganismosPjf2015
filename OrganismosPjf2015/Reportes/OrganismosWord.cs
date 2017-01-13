@@ -62,11 +62,15 @@ namespace OrganismosPjf2015.Reportes
                 {
 
                     if (organismo.TipoOrganismo == 3)
-                    { 
-                        if(String.IsNullOrEmpty(funcionario.Texto))
+                    {
+                        if (String.IsNullOrEmpty(funcionario.Texto))
                             par.Range.Text = String.Format("{0} {1} {2}", funcionario.Puesto, funcionario.Nombre, funcionario.Apellidos);
                         else
-                            par.Range.Text = String.Format("{0} {1} {2}", funcionario.Texto, funcionario.Nombre, funcionario.Apellidos);
+                        {
+                            par.Range.Text = String.Format("{0} {1}", funcionario.Nombre, funcionario.Apellidos);
+                            par.Range.InsertParagraphAfter();
+                            par.Range.Text = String.Format("({0})", this.GetCompleteDate(funcionario.Texto));
+                        }
                     }
                     else
                         par.Range.Text = String.Format("{0} {1} {2}", funcionario.Puesto, funcionario.Nombre, funcionario.Apellidos);
