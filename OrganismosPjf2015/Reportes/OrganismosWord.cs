@@ -64,7 +64,7 @@ namespace OrganismosPjf2015.Reportes
                     if (organismo.TipoOrganismo == 3)
                     {
                         if (String.IsNullOrEmpty(funcionario.Texto))
-                            par.Range.Text = String.Format("{0} {1} {2}", funcionario.Puesto, funcionario.Nombre, funcionario.Apellidos);
+                            par.Range.Text = String.Format("{0} {1} {2}", (funcionario.EnFunciones == 101) ? "Juez administrador" : funcionario.Puesto, funcionario.Nombre, funcionario.Apellidos);
                         else
                         {
                             par.Range.Text = String.Format("{0} {1}", funcionario.Nombre, funcionario.Apellidos);
@@ -75,13 +75,13 @@ namespace OrganismosPjf2015.Reportes
                     else
                         par.Range.Text = String.Format("{0} {1} {2}", funcionario.Puesto, funcionario.Nombre, funcionario.Apellidos);
 
-                    if (funcionario.EnFunciones > 100)
-                    {
-                        par.Range.InsertParagraphAfter();
-                        par.Range.Text = (from n in listaFunciones
-                                          where n.IdElemento == funcionario.EnFunciones
-                                              select n.Descripcion).ToList()[0];
-                    }
+                    //if (funcionario.EnFunciones > 100)
+                    //{
+                    //    par.Range.InsertParagraphAfter();
+                    //    par.Range.Text = (from n in listaFunciones
+                    //                      where n.IdElemento == funcionario.EnFunciones
+                    //                          select n.Descripcion).ToList()[0];
+                    //}
 
                     if (!String.IsNullOrEmpty(funcionario.Texto.Trim()) && organismo.TipoOrganismo != 3)
                     {
